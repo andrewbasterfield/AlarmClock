@@ -1,12 +1,10 @@
 #include <LiquidCrystal.h>
 #include <LCDKeypad.h>
 #include <Time.h>
-#include <DFR_Key.h>
 #include <Wire.h>
 #include <DS1307RTC.h>
 #include <EEPROM.h>
 #include "EEPROMAnything.h"
-#include <TimeAlarms.h>
 
 /*
  * Timeouts to revert back to time display
