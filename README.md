@@ -40,22 +40,22 @@ be moved left of the first field (hours) or right of the last field (years).
 Alarms
 ------
 
-The Select button will cycle through 16 alarms, which can be set in a
-similar way, except that for every field you can now increment or decrement
-until you reach an asterisk wildcard value just before the field rolls over
-or rolls under.
+The Select button will cycle through 16 numbered alarms, which can be set in
+a similar way, except that for every field you can now increment or
+decrement until you reach an asterisk wildcard value just before the field
+rolls over or rolls under.
 
 This allows you to set alarms in a similar manner to cron.
 
-         7:00:00   
+    3    7:00:00   
     Wed ** *** ****
 
-The above alarm goes off every Wednesday at 7:00:00
+The above alarm is alarm #3 and it goes off every Wednesday at 7:00:00
 
-        00:00:00   
+    7   00:00:00   
     *** 20 *** ****
 
-The above alarm would go off on the 20th of each month at midnight.
+The above alarm is alarm #7 would go off on the 20th of each month at midnight.
 
 The alarms have no effect when they go off apart from printing "Alarm: N"
 (where N is an integer) on the serial connection.  Hook your own code in
