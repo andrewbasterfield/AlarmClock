@@ -20,3 +20,7 @@ http://www.dfrobot.com/wiki/index.php?title=Arduino_LCD_KeyPad_Shield_(SKU:_DFR0
 http://linksprite.com/wiki/index.php5?title=16_X_2_LCD_Keypad_Shield_for_Arduino
 
 http://forum.arduino.cc/index.php?topic=38061.0
+
+The time can be set using the front panel buttons or synced from a PC over serial port by using the setTime.pl perl script in this repository.
+
+Alarms can be set from the front panel, although they current have no effect when they go off apart from printing "Alarm: N" (where N is an integer) on the serial connection.
