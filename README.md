@@ -1,7 +1,44 @@
 AlarmClock
 ==========
 
-An Arduino + LCD Keypad alarm clock
+An Arduino + LCD Keypad alarm clock.
+
+The display on the LCD keypad is similar to this;
+
+        19:25:11   
+    Wed 19 Mar 2014
+
+Redrawing the entire screen every second is slow and flickery hence the display is only redrawn in the digits that need it.
+
+Setting the time
+----------------
+
+The time can be set using the front panel buttons or synced from a PC over serial port by using the setTime.pl perl script in this repository.
+
+The time can be set using the right and left buttons to move a cursor between fields on the display and the up and down buttons will allow the value to be incremented or decremented.
+
+Alarms
+------
+
+The Select button will cycle through 16 alarms, which can be set in a similar way, except that for every field you can increment or decrement to a wildcard value before the field rolls over or rolls under.
+
+This allows you to set alarms in a similar manner to cron.
+
+         7:00:00   
+    Wed ** *** ****
+
+This alarm goes off every Wednesday at 7:00:00
+
+        00:00:00   
+    *** 20 *** ****
+
+This alarm would go off on the 20th of each month at midnight.
+
+The alarms have no effect when they go off apart from printing "Alarm: N" (where N is an integer) on the serial connection.
+
+
+Dependencies
+------------
 
 Uses this Arduino time library
 
@@ -21,6 +58,3 @@ http://linksprite.com/wiki/index.php5?title=16_X_2_LCD_Keypad_Shield_for_Arduino
 
 http://forum.arduino.cc/index.php?topic=38061.0
 
-The time can be set using the front panel buttons or synced from a PC over serial port by using the setTime.pl perl script in this repository.
-
-Alarms can be set from the front panel, although they current have no effect when they go off apart from printing "Alarm: N" (where N is an integer) on the serial connection.
