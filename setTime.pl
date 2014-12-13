@@ -62,19 +62,16 @@ while (1) {
     #
     $buffer = substr($buffer,$nlpos+1);
   
-    print "RECV [".$line."]\n";
+    logger('RECV',"[".$line."]\n");
 
     if ($line eq "Request Sync") {
-      my $time = getTime();
-      $time = time();
-      
-      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($time);
+      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(getTime());
       
       $year += 1900;
       $mon += 1;
       
       $time = sprintf("H%02dM%02dS%02dd%02dm%02dY%04dT",$hour,$min,$sec,$mday,$mon,$year);
-      print "SEND [$time]\n";
+      logger("SEND","[$time]\n");
       
       
       $port->write($time);
@@ -84,22 +81,31 @@ while (1) {
 
 sub getTime {
 
-  my $time = Time::HiRes::time();
+  my ($time,$usec) = Time::HiRes::gettimeofday();
   
   #
-  # take the integer component of the time +1
+  # Sleep until the start of the next second
   #
-  my $itime = int $time + 1;
-  my $ftime = $time - $itime;
+  Time::HiRes::usleep(1000000-$usec);
+
   #
-  # calculate the time required to sleep till $time
+  # we have slept so increment the unix timestamp
   #
-  my $frac = 1 - $ftime;
-  
-  Time::HiRes::sleep($frac);
-  
-  #$time += 3600;
+  $time++;
   
   return $time;
-#  return sprintf("T%10.0f",$time);
+}
+
+sub logger {
+  my $level = shift;
+  my $info = shift;
+
+  foreach my $line (split (/\n/, $info)) {
+    #
+    my ($time,$usec) = Time::HiRes::gettimeofday();
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)=localtime($time);
+    #
+    printf "%4d-%02d-%02d %02d:%02d:%02d.%06d [%d] %s: %s\n",$year+1900,$mon+1,$mday,$hour,$min,$sec,$usec,$$,$level,$line;
+  }
 }
