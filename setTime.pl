@@ -70,7 +70,7 @@ while (1) {
       $year += 1900;
       $mon += 1;
       
-      $time = sprintf("H%02dM%02dS%02dd%02dm%02dY%04dT",$hour,$min,$sec,$mday,$mon,$year);
+      my $time = sprintf("H%02dM%02dS%02dd%02dm%02dY%04dT",$hour,$min,$sec,$mday,$mon,$year);
       logger("SEND","[$time]\n");
       
       
