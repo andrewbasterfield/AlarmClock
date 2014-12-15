@@ -83,15 +83,17 @@ sub getTime {
 
   my ($time,$usec) = Time::HiRes::gettimeofday();
   
-  #
-  # Sleep until the start of the next second
-  #
-  Time::HiRes::usleep(1000000-$usec);
+  if ($usec) {
+    #
+    # Sleep until the start of the next second
+    #
+    Time::HiRes::usleep(1000000-$usec);
 
-  #
-  # we have slept so increment the unix timestamp
-  #
-  $time++;
+    #
+    # we have slept so increment the unix timestamp
+    #
+    $time++;
+  }
   
   return $time;
 }
