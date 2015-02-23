@@ -17,15 +17,20 @@
 use warnings;
 use strict;
 use Time::HiRes;
+use Symbol qw/gensym/;
+my $handle = gensym;
+use IO::Select;
+my $set = IO::Select->new();
 
 # Set up the serial port for Windows
 #use Win32::SerialPort;
-#my $port = Win32::SerialPort->new("COM2");
+#my $port = tie(*$handle,"Win32::SerialPort","COM2") || die "Can't tie: $!\n";
 
 # setup serial port for Linux
 use Device::SerialPort;
-my $port = Device::SerialPort->new("/dev/ttyACM0");
+my $port = tie(*$handle,"Device::SerialPort","/dev/ttyACM0") || die "Can't tie: $!\n";
 
+$set->add($handle);
 #port configuration  115200/8/N/1
 $port->baudrate(115200);
 $port->databits(8);
@@ -42,10 +47,13 @@ unless ($port) {
 my $buffer = "";
 while (1) {
 
-  my ($count,$chunk) = $port->read(255);
+  
+  if ($set->can_read()) {
+    my ($count,$chunk) = $port->read(255);
 
-  if (defined $count && $count > 0) {
-    $buffer .= $chunk;
+    if (defined $count && $count > 0) {
+      $buffer .= $chunk;
+    }
   }
   
   while ($buffer =~ m/\n/) {
