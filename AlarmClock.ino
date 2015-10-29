@@ -21,6 +21,7 @@
 #include <DS1307RTC.h>
 #include <EEPROM.h>
 #include "EEPROMAnything.h"
+#include "AlarmClock.h"
 
 /*
  * Timeouts to revert back to time display
@@ -33,11 +34,6 @@
  * Alarm
  */
 #define QTY_ALARMS (16)
-
-typedef struct {
-  tmElements_t tm;
-  uint8_t checksum;
-} alarm_t;
 
 uint8_t getAlarmChecksum(alarm_t alarm) {
   uint8_t c = 0;
